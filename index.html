@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Никита &amp; Оксана — Свадьба 2026</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Marcellus&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <style>
+        /* ===================================================== */
+        /* ДИЗАЙН-ТОКЕНЫ                                          */
+        /* ===================================================== */
+        :root {
+            --cream:        #FBF5EC;   /* фон страницы */
+            --ivory:        #FFFDF9;   /* фон карточек */
+            --beige-soft:   #F1E3CE;   /* альтернативный фон секций */
+            --pink:         #E7C7C2;   /* пудровый розовый — акцент */
+            --pink-deep:    #D9A9A4;
+            --gold:         #D8BA86;   /* кремово-золотой — акцент */
+            --brown:        #8A5A3B;   /* тёплый коричневый — вторичный акцент */
+            --brown-deep:   #5B3524;   /* глубокий шоколадный — CTA / signature */
+            --ink:          #3E2C21;   /* основной текст */
+            --taupe:        #8A7666;   /* второстепенный текст */
+            --hairline:     #E0CBAE;   /* золотая тонкая линия */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cormorant Infant', serif;
+            background: var(--cream);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--ivory);
+            box-shadow: 0 0 40px rgba(91, 53, 36, 0.08);
+            min-height: 100vh;
+            padding-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .font-script { font-family: 'Leckerli One', cursive; }
+        .font-serif  { font-family: 'Cormorant Infant', serif; }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: radial-gradient(120% 100% at 50% 0%, #F6E9DB 0%, var(--beige-soft) 45%, var(--pink) 100%);
+            padding: 40px 20px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0; right: 0; height: 70px;
+            background: linear-gradient(to top, var(--ivory), transparent);
+            pointer-events: none;
+        }
+        .hero-blob { position: absolute; border-radius: 50%; opacity: 0.28; pointer-events: none; filter: blur(2px); }
+        .hero-blob-1 { width: 300px; height: 300px; background: var(--gold); top: -90px; right: -70px; }
+        .hero-blob-2 { width: 220px; height: 220px; background: var(--pink-deep); bottom: -50px; left: -70px; opacity: 0.22; }
+
+        .hero-content { position: relative; z-index: 2; }
+
+        .polaroid-grid { display: flex; gap: 14px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .polaroid {
+            background: #ffffff;
+            padding: 8px 8px 32px 8px;
+            box-shadow: 0 8px 24px rgba(91, 53, 36, 0.14);
+            transform: rotate(-3deg);
+            transition: transform 0.3s ease;
+            width: 132px;
+            max-width: 45%;
+        }
+        .polaroid:last-child { transform: rotate(3deg); }
+        .polaroid:hover { transform: rotate(0deg) scale(1.03); }
+        .polaroid img {
+            width: 100%; height: 132px; object-fit: cover; display: block;
+            background: var(--beige-soft); border-radius: 2px;
+        }
+        .polaroid .caption {
+            font-family: 'Cormorant Infant', serif; font-size: 12px; text-align: center;
+            margin-top: 8px; color: var(--brown); letter-spacing: 1px; font-style: italic;
+        }
+
+        .hero-eyebrow {
+            font-family: 'Cormorant Infant', serif; font-size: 13px; letter-spacing: 4px;
+            text-transform: uppercase; color: var(--brown); margin-bottom: 4px; font-weight: 600;
+        }
+        .hero-names { font-family: 'Leckerli One', cursive; font-size: 38px; color: var(--brown-deep); margin: 2px 0 4px; line-height: 1.15; }
+        .hero-sub   { font-family: 'Cormorant Infant', serif; font-size: 17px; color: var(--ink); font-weight: 300; letter-spacing: 1px; font-style: italic; }
+        .hero-date  { font-family: 'Cormorant Infant', serif; font-size: 16px; color: var(--brown-deep); letter-spacing: 3px; font-weight: 600; margin-top: 10px; }
+        .hero-days  { font-family: 'Cormorant Infant', serif; font-size: 14px; color: var(--taupe); letter-spacing: 1px; font-weight: 300; margin-top: 2px; }
+
+        /* мини-календарь */
+        .mini-cal { display: flex; gap: 6px; justify-content: center; margin: 16px 0 4px; }
+        .mini-cal .day {
+            width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 13px; color: var(--taupe); background: rgba(255,255,255,0.55);
+        }
+        .mini-cal .day.heart {
+            background: var(--brown-deep); color: #fff; font-weight: 700; position: relative;
+        }
+        .mini-cal .day.heart::after { content: '♥'; position: absolute; font-size: 10px; top: -8px; }
+
+        /* Таймер */
+        .timer-wrap {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(4px);
+            border-radius: 60px; padding: 12px 16px; margin: 16px auto 0;
+            display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+            box-shadow: 0 2px 14px rgba(91,53,36,0.06);
+        }
+        .timer-item { text-align: center; min-width: 44px; }
+        .timer-item .num { font-family: 'Cormorant Infant', serif; font-size: 24px; font-weight: 700; color: var(--brown-deep); display: block; line-height: 1.1; }
+        .timer-item .label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--taupe); font-weight: 500; }
+
+        /* ===== СЕКЦИИ ===== */
+        .section { padding: 44px 24px 32px; position: relative; }
+        .section-divider {
+            width: 100%; height: 40px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 40" preserveAspectRatio="none"><path d="M0,20 Q300,0 600,20 T1200,20 L1200,40 L0,40 Z" fill="%23E7C7C2" opacity="0.25"/></svg>') no-repeat bottom;
+            background-size: 100% 100%; margin: -10px 0 0;
+        }
+        .section-eyebrow {
+            text-align: center; font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--brown); font-weight: 600; margin-bottom: 6px;
+        }
+        .section-title { font-family: 'Leckerli One', cursive; font-size: 27px; color: var(--brown-deep); text-align: center; margin-bottom: 10px; }
+        .section-sub { font-family: 'Cormorant Infant', serif; font-size: 16.5px; color: var(--ink); text-align: center; font-weight: 300; margin-bottom: 20px; padding: 0 4px; }
+        .hr-gold { width: 46px; height: 1px; background: var(--hairline); margin: 6px auto 18px; }
+
+        .info-card {
+            background: var(--beige-soft); border-radius: 20px; padding: 18px 18px 14px; margin-bottom: 14px;
+            border-left: 4px solid var(--pink-deep); box-shadow: 0 2px 8px rgba(91,53,36,0.03);
+        }
+        .info-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--brown); font-weight: 700; }
+        .info-card .value { font-size: 17px; font-weight: 400; color: var(--ink); margin-top: 2px; }
+        .info-card .value i { margin-right: 6px; color: var(--brown); width: 20px; }
+
+        /* ===== ПУТЬ (signature scroll animation) ===== */
+        .journey-wrap { position: relative; margin-top: 10px; }
+        .journey-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; }
+        .journey-path { fill: none; stroke: var(--pink-deep); stroke-width: 2.5; stroke-linecap: round; }
+        .journey-heart { transition: transform 0.05s linear; }
+        .journey-heart text { font-size: 20px; }
+
+        .journey-list { position: relative; z-index: 2; display: flex; flex-direction: column; }
+        .journey-day-label {
+            position: relative; z-index: 3; align-self: center;
+            font-family: 'Leckerli One', cursive; font-size: 18px; color: #fff;
+            background: var(--brown-deep); padding: 6px 20px; border-radius: 30px;
+            box-shadow: 0 4px 14px rgba(91,53,36,0.25); margin: 6px 0 18px;
+        }
+        .journey-stop {
+            position: relative; width: 78%; margin-bottom: 26px;
+            opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .journey-stop.visible { opacity: 1; transform: translateY(0); }
+        .journey-stop.side-left  { align-self: flex-start; padding-right: 10px; }
+        .journey-stop.side-right { align-self: flex-end; padding-left: 10px; }
+        .journey-dot {
+            position: absolute; top: 6px; width: 12px; height: 12px; border-radius: 50%;
+            background: var(--ivory); border: 3px solid var(--brown-deep); z-index: 3;
+        }
+        .side-left .journey-dot  { right: -6px; }
+        .side-right .journey-dot { left: -6px; }
+        .journey-card {
+            background: var(--ivory); border-radius: 18px; padding: 14px 16px; box-shadow: 0 4px 16px rgba(91,53,36,0.08);
+            border: 1px solid var(--hairline);
+        }
+        .journey-time { font-family: 'Leckerli One', cursive; font-size: 18px; color: var(--brown-deep); }
+        .journey-title { font-size: 16.5px; font-weight: 600; margin-top: 2px; }
+        .journey-place { font-size: 13.5px; color: var(--taupe); margin-top: 2px; }
+        .journey-map-link { display: inline-block; margin-top: 6px; font-size: 12.5px; color: var(--brown); text-decoration: none; border-bottom: 1px dotted var(--brown); }
+
+        .map-embed { width: 100%; height: 180px; border: 0; border-radius: 18px; margin: 10px 0 4px; filter: sepia(8%); }
+
+        /* ===== ДРЕСС-КОД ===== */
+        .palette-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 16px 0 6px; }
+        .swatch { width: 62px; text-align: center; }
+        .swatch .circle {
+            width: 62px; height: 62px; border-radius: 50%; box-shadow: 0 4px 14px rgba(91,53,36,0.18), inset 0 0 14px rgba(255,255,255,0.5);
+            border: 2px solid rgba(255,255,255,0.7);
+        }
+        .swatch .name { font-size: 11px; color: var(--taupe); margin-top: 6px; letter-spacing: 0.3px; }
+        .sw-milk   { background: radial-gradient(circle at 35% 30%, #fffaf1, #ece0cd 75%); }
+        .sw-cream  { background: radial-gradient(circle at 35% 30%, #f6e6c8, #d9b98a 80%); }
+        .sw-pink   { background: radial-gradient(circle at 35% 30%, #f3dcd8, #d9a9a4 80%); }
+        .sw-beige  { background: radial-gradient(circle at 35% 30%, #e8d3ae, #c9a26e 85%); }
+        .sw-brown  { background: radial-gradient(circle at 35% 30%, #8a5a3b, #4a2c1c 85%); }
+
+        .dress-card {
+            background: var(--beige-soft); border-radius: 20px; padding: 18px; margin-top: 14px;
+        }
+        .dress-card .dc-title { font-family: 'Leckerli One', cursive; font-size: 19px; color: var(--brown-deep); margin-bottom: 4px; }
+        .dress-card.day2 { background: linear-gradient(135deg, #E7C7C2 0%, #D8BA86 100%); color: #3E2C21; }
+
+        .adults-badge {
+            display: inline-flex; align-items: center; gap: 6px; background: var(--brown-deep); color: #fff;
+            padding: 8px 16px; border-radius: 30px; font-size: 13px; letter-spacing: 0.5px; margin: 10px auto 0;
+        }
+
+        /* ===== ФОРМА ===== */
+        .rsvp-form { background: var(--ivory); border-radius: 28px; padding: 28px 20px 24px; box-shadow: 0 4px 30px rgba(91,53,36,0.08); border: 1px solid var(--hairline); margin-top: 6px; }
+        .rsvp-form label { font-family: 'Cormorant Infant', serif; font-size: 15px; font-weight: 600; color: var(--ink); display: block; margin-bottom: 3px; }
+        .rsvp-form .hint { font-size: 13px; color: var(--taupe); font-weight: 300; margin-bottom: 12px; }
+        .rsvp-form input[type="text"], .rsvp-form input[type="tel"], .rsvp-form select {
+            width: 100%; padding: 12px 14px; border: 1.5px solid var(--hairline); border-radius: 14px;
+            font-family: 'Cormorant Infant', serif; font-size: 17px; background: var(--cream); color: var(--ink);
+            transition: border 0.2s; margin-bottom: 12px; outline: none; -webkit-appearance: none;
+        }
+        .rsvp-form input:focus, .rsvp-form select:focus { border-color: var(--pink-deep); background: #ffffff; }
+        .rsvp-form input::placeholder { color: #b8a89a; font-weight: 300; }
+
+        .family-member { display: flex; gap: 10px; align-items: center; background: var(--beige-soft); border-radius: 14px; padding: 10px 12px; margin-bottom: 8px; animation: fadeSlide 0.3s ease; }
+        .family-member input { flex: 1; margin-bottom: 0 !important; padding: 8px 10px; font-size: 15px; border-radius: 10px; background: #ffffff; }
+        .family-member select { flex: 0 0 100px; margin-bottom: 0 !important; padding: 8px 8px; font-size: 14px; border-radius: 10px; background: #ffffff; }
+        .family-member .remove-btn { background: none; border: none; color: var(--pink-deep); font-size: 18px; cursor: pointer; padding: 0 4px; line-height: 1; }
+        .family-member .remove-btn:hover { color: #a05040; }
+
+        .btn-add-member {
+            background: none; border: 1.5px dashed var(--pink-deep); border-radius: 14px; padding: 10px; width: 100%;
+            font-family: 'Cormorant Infant', serif; font-size: 15px; color: var(--brown); cursor: pointer; transition: all 0.2s; margin-top: 4px;
+        }
+        .btn-add-member:hover { background: var(--beige-soft); border-color: var(--brown); }
+
+        .day-selector { margin: 16px 0 10px; padding: 14px; background: var(--beige-soft); border-radius: 16px; }
+        .day-selector label { font-weight: 600; display: block; margin-bottom: 6px; }
+        .day-selector .day-option { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 400; padding: 4px 0; }
+        .day-selector .day-option input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--brown-deep); cursor: pointer; }
+        .day-selector .hint { font-size: 13px; color: var(--taupe); margin-top: 6px; font-weight: 300; }
+
+        .lodging-selector { margin: 12px 0 10px; padding: 14px; background: var(--beige-soft); border-radius: 16px; }
+        .lodging-selector label.q { font-weight: 600; display: block; margin-bottom: 8px; }
+        .lodging-options { display: flex; gap: 10px; }
+        .lodging-options .lodge-btn {
+            flex: 1; text-align: center; padding: 10px; border-radius: 12px; border: 1.5px solid var(--hairline);
+            background: #ffffff; cursor: pointer; font-size: 15px; color: var(--ink); transition: all 0.2s;
+        }
+        .lodging-options .lodge-btn.active { background: var(--brown-deep); border-color: var(--brown-deep); color: #fff; }
+
+        .btn-submit {
+            width: 100%; padding: 16px; background: var(--brown-deep); border: none; border-radius: 60px;
+            font-family: 'Leckerli One', cursive; font-size: 20px; color: #ffffff; cursor: pointer; transition: all 0.3s;
+            margin-top: 12px; box-shadow: 0 4px 16px rgba(91,53,36,0.3); letter-spacing: 0.5px;
+        }
+        .btn-submit:hover { background: #4a2c1c; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(91,53,36,0.35); }
+        .btn-submit:active { transform: scale(0.98); }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        .btn-phone-next {
+            width: 100%; padding: 16px; background: var(--pink); border: none; border-radius: 60px;
+            font-family: 'Cormorant Infant', serif; font-size: 18px; color: var(--brown-deep); cursor: pointer;
+            transition: all 0.3s; box-shadow: 0 4px 16px rgba(231,199,194,0.5); font-weight: 600;
+        }
+        .btn-phone-next:hover { background: var(--pink-deep); transform: translateY(-2px); }
+
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--brown-deep); color: #fff;
+            padding: 14px 28px; border-radius: 60px; font-family: 'Cormorant Infant', serif; font-size: 17px;
+            box-shadow: 0 6px 30px rgba(0,0,0,0.2); opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none; z-index: 999; max-width: 90%; text-align: center;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.success { background: #5c7a52; }
+        .toast.error { background: #a3543f; }
+
+        .footer { text-align: center; padding: 24px 20px 16px; font-size: 13px; color: var(--taupe); border-top: 1px solid var(--hairline); margin-top: 10px; }
+        .footer a { color: var(--taupe); text-decoration: none; }
+        .footer a:hover { color: var(--brown); }
+
+        @keyframes fadeSlide { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes appearFromBottom { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .anim-appear { animation: appearFromBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+
+        @media (max-width: 400px) {
+            .polaroid { width: 112px; }
+            .polaroid img { height: 104px; }
+            .hero-names { font-size: 30px; }
+            .timer-item .num { font-size: 20px; }
+            .section { padding: 34px 16px 22px; }
+            .rsvp-form { padding: 20px 14px; }
+            .family-member { flex-wrap: wrap; }
+            .family-member select { flex: 1; }
+            .journey-stop { width: 88%; }
+            .swatch { width: 54px; }
+            .swatch .circle { width: 54px; height: 54px; }
+        }
+
+        .rsvp-full-form { display: none; margin-top: 12px; border-top: 1px solid var(--hairline); padding-top: 16px; }
+        .rsvp-full-form.visible { display: block; }
+        .phone-display { background: var(--beige-soft); border-radius: 16px; padding: 8px 14px; margin-bottom: 14px; font-size: 14px; color: var(--brown-deep); }
+        .phone-display .change-btn { background: none; border: none; color: var(--brown); cursor: pointer; float: right; font-size: 13px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .anim-appear, .journey-stop { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+
+    <div class="toast" id="toast"></div>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="hero-blob hero-blob-1"></div>
+        <div class="hero-blob hero-blob-2"></div>
+
+        <div class="hero-content anim-appear">
+            <div class="polaroid-grid">
+                <div class="polaroid">
+                    <img src="Nikita.jpg" alt="Никита" />
+                    <div class="caption">Никита</div>
+                </div>
+                <div class="polaroid">
+                    <img src="Oksana.jpg" alt="Оксана" />
+                    <div class="caption">Оксана</div>
+                </div>
+                <!-- Когда появятся детские фото — добавьте ещё два блока .polaroid
+                     с файлами NikitaKid.jpg и OksanaKid.jpg, они встанут вторым рядом. -->
+            </div>
+
+            <div class="hero-eyebrow">Мы выросли, и теперь нам можно</div>
+            <div class="hero-names">Никита + Оксана</div>
+            <div class="hero-sub">приглашают вас на свадьбу</div>
+            <div class="hero-date">18–19 сентября 2026</div>
+            <div class="hero-days">♡ Два дня любви и радости ♡</div>
+
+            <div class="mini-cal">
+                <div class="day">16</div>
+                <div class="day">17</div>
+                <div class="day heart">18</div>
+                <div class="day">19</div>
+                <div class="day">20</div>
+            </div>
+
+            <div class="timer-wrap" id="timerWrap">
+                <div class="timer-item"><span class="num" id="days">--</span><span class="label">дней</span></div>
+                <div class="timer-item"><span class="num" id="hours">--</span><span class="label">часов</span></div>
+                <div class="timer-item"><span class="num" id="minutes">--</span><span class="label">минут</span></div>
+                <div class="timer-item"><span class="num" id="seconds">--</span><span class="label">секунд</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ПРИВЕТСТВИЕ ===== -->
+    <section class="section" style="background:var(--ivory);">
+        <div class="section-divider"></div>
+        <div class="section-eyebrow" style="margin-top:6px;">Дорогие гости</div>
+        <div class="section-title">Мы рады пригласить вас</div>
+        <p class="section-sub" style="font-size:17px;">
+            Каждый из вас — особенная часть нашей жизни.
+            <br><br>
+            Будем бесконечно счастливы увидеть вас, обнять и разделить вместе с вами день нашей свадьбы навсегда!
+        </p>
+        <div style="text-align:center;font-size:30px;color:var(--pink-deep);">♡</div>
+    </section>
+
+    <!-- ===== НАШ ПУТЬ (сигнатурный анимированный таймлайн) ===== -->
+    <section class="section" style="background:var(--beige-soft);" id="journeySection">
+        <div class="section-eyebrow">18–19 сентября</div>
+        <div class="section-title">Наш путь</div>
+        <p class="section-sub">Пролистайте — сердечко проведёт вас по программе обоих дней</p>
+
+        <div class="journey-wrap" id="journeyWrap">
+            <svg class="journey-svg" id="journeySvg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path class="journey-path" id="journeyPath" d=""></path>
+                <g class="journey-heart" id="journeyHeart">
+                    <text x="0" y="0" text-anchor="middle" dominant-baseline="middle">❤</text>
+                </g>
+            </svg>
+
+            <div class="journey-list" id="journeyList">
+                <!-- Заполняется JavaScript-ом на основе массива JOURNEY_STOPS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ДРЕСС-КОД ===== -->
+    <section class="section" style="background:var(--ivory);">
+        <div class="section-eyebrow">Как одеться</div>
+        <div class="section-title">Дресс-код</div>
+
+        <div class="dress-card">
+            <div class="dc-title">День 1 · 18 сентября</div>
+            <p class="section-sub" style="margin-bottom:6px;font-size:15.5px;">
+                Мы очень старались сделать нашу свадьбу стильной — будем рады, если вы поддержите нашу цветовую гамму: спокойные, естественные оттенки.
+            </p>
+            <div class="palette-row">
+                <div class="swatch"><div class="circle sw-milk"></div><div class="name">молочный</div></div>
+                <div class="swatch"><div class="circle sw-cream"></div><div class="name">кремовый</div></div>
+                <div class="swatch"><div class="circle sw-pink"></div><div class="name">пудровый</div></div>
+                <div class="swatch"><div class="circle sw-beige"></div><div class="name">бежевый</div></div>
+                <div class="swatch"><div class="circle sw-brown"></div><div class="name">коричневый</div></div>
+            </div>
+        </div>
+
+        <div class="dress-card day2" style="margin-top:16px;">
+            <div class="dc-title">День 2 · 19 сентября</div>
+            <p class="section-sub" style="margin-bottom:0;font-size:15.5px;color:#3E2C21;">
+                Тёщина лапшичка и пиво — стиль 90-х или свободный. Доставайте самое яркое и ностальгическое из шкафа 🕺📼
+            </p>
+        </div>
+
+        <div style="text-align:center;">
+            <span class="adults-badge"><i class="fa fa-moon-o"></i> Вечер 18 сентября — только для взрослых</span>
+        </div>
+        <p class="section-sub" style="margin-top:10px;font-size:14.5px;">
+            Мы приняли непростое решение сделать этот вечер только для взрослых — хотим, чтобы все гости, включая родителей, могли полностью расслабиться и насладиться праздником.
+            <br><br>
+            На ваше усмотрение можно присоединиться только к банкету.
+        </p>
+    </section>
+
+    <!-- ===== ПОДАРКИ ===== -->
+    <section class="section" style="background:var(--beige-soft);">
+        <div class="section-eyebrow">От всего сердца</div>
+        <div class="section-title">Пожелания по подаркам</div>
+        <p class="section-sub">
+            Не ломайте голову насчёт подарков — ваши пожелания в конверте будут для нас лучшим вариантом.
+            <br><br>
+            Мы не сможем насладиться цветами в полной мере, поэтому будем рады любой альтернативе <span style="color:var(--pink-deep);">♥</span> — вино или денежный эквивалент.
+        </p>
+        <div style="text-align:center;font-size:36px;color:var(--pink-deep);opacity:0.4;margin:4px 0;">♡</div>
+    </section>
+
+    <!-- ===== RSVP ===== -->
+    <section class="section" style="background:var(--ivory);padding-bottom:40px;" id="rsvp">
+        <div class="section-eyebrow">Ждём вашего ответа</div>
+        <div class="section-title">Подтверждение присутствия</div>
+        <p class="section-sub">
+            Пожалуйста, подтвердите своё присутствие <br> до <strong>10 сентября 2026</strong>
+        </p>
+
+        <div class="rsvp-form" id="rsvpForm">
+            <div id="phoneStep">
+                <label for="phoneInput">📱 Номер телефона семьи</label>
+                <p class="hint">Введите номер, по которому мы сможем с вами связаться</p>
+                <input type="tel" id="phoneInput" placeholder="+7 900 123 45 67" maxlength="18" />
+                <button class="btn-phone-next" id="phoneNextBtn">
+                    Продолжить <i class="fa fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="rsvp-full-form" id="fullForm">
+                <div class="phone-display">
+                    <i class="fa fa-phone"></i> <span id="displayPhone">+7 ___</span>
+                    <button class="change-btn" id="changePhoneBtn">изменить</button>
+                </div>
+
+                <label for="mainName">👤 ФИО главного (кто заполняет)</label>
+                <input type="text" id="mainName" placeholder="Иванов Иван Иванович" />
+
+                <label>👨‍👩‍👧‍👦 ФИО тех, кто придёт</label>
+                <p class="hint">Добавьте всех членов семьи, которые будут с вами</p>
+
+                <div id="familyList"></div>
+
+                <button class="btn-add-member" id="addMemberBtn">
+                    <i class="fa fa-plus-circle" style="color:var(--brown);"></i> Добавить члена семьи
+                </button>
+
+                <div class="day-selector">
+                    <label>📅 В какие дни вы придёте?</label>
+                    <label class="day-option">
+                        <input type="checkbox" id="day1Check" checked />
+                        18 сентября — роспись и банкет
+                    </label>
+                    <label class="day-option">
+                        <input type="checkbox" id="day2Check" checked />
+                        19 сентября — тёщина лапшичка (90-е)
+                    </label>
+                    <p class="hint">Можно выбрать один день или оба — например, прийти 18-го только к банкету</p>
+                </div>
+
+                <div class="lodging-selector">
+                    <label class="q">🛏 Нужна ли ночёвка?</label>
+                    <div class="lodging-options">
+                        <div class="lodge-btn" id="lodgeYes" data-value="yes">Да, нужна</div>
+                        <div class="lodge-btn active" id="lodgeNo" data-value="no">Нет, спасибо</div>
+                    </div>
+                    <p class="hint">Поможем сориентироваться с местом для отдыха, если вы издалека</p>
+                </div>
+
+                <button class="btn-submit" id="submitBtn">
+                    <i class="fa fa-check-circle"></i> Подтвердить
+                </button>
+                <p style="text-align:center;font-size:13px;color:var(--taupe);margin-top:8px;">
+                    Если вы уже подтверждали — данные обновятся автоматически
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        © 2026 Никита &amp; Оксана
+        <br>
+        <span style="font-size:11px;color:var(--taupe);">
+            Соль-Илецк, 18–19 сентября <i class="fa fa-heart" style="color:var(--pink-deep);"></i>
+        </span>
+    </div>
+
+</div>
+
+<script>
+(function() {
+    'use strict';
+
+    // ========== КОНФИГУРАЦИЯ ==========
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxR5YQuWebi_UOKnrB4CHWcsi3-Ggi-PIIl4gtpaOIOiAq9hF-mR3UBLYFrU7QxEH-34A/exec';
+    const ADMIN_SECRET = '🔞🍺💀👾';
+
+    // ========== ПРОГРАММА ДНЕЙ (единый источник для "Нашего пути") ==========
+    const JOURNEY_STOPS = [
+        { day: 1, dayLabel: '18 сентября', time: '14:00', title: 'Сбор гостей',
+          place: 'Соль-Илецк, ул. Московская, д. 161', map: 'Соль-Илецк, ул. Московская, 161' },
+        { day: 1, dayLabel: '18 сентября', time: '14:20', title: 'Торжественная регистрация брака',
+          place: 'Именно в этот момент мы скажем друг другу «да»', map: 'Соль-Илецк, ул. Московская, 161' },
+        { day: 1, dayLabel: '18 сентября', time: '16:00', title: 'Праздничный банкет',
+          place: 'Соль-Илецк, ул. Кирова, д. 100, ресторан «Астана»', map: 'Соль-Илецк, ул. Кирова, 100' },
+        { day: 2, dayLabel: '19 сентября', time: '12:00', title: 'Тёщина лапшичка и пиво',
+          place: 'Соль-Илецк, ул. Парижских Коммунаров, д. 3', map: 'Соль-Илецк, ул. Парижских Коммунаров, 3' }
+    ];
+
+    // ========== ПОСТРОЕНИЕ "НАШЕГО ПУТИ" ==========
+    function buildJourney() {
+        const list = document.getElementById('journeyList');
+        const svg = document.getElementById('journeySvg');
+        const path = document.getElementById('journeyPath');
+        const heart = document.getElementById('journeyHeart');
+
+        const rowHeight = 118;   // условная высота одной остановки в единицах viewBox
+        const dayGap = 46;       // доп. отступ перед лейблом дня
+        let y = 30;
+        let lastDay = null;
+        let side = 'left';
+        const points = []; // {x,y, stopIndex}
+        let html = '';
+
+        JOURNEY_STOPS.forEach((stop, i) => {
+            if (stop.day !== lastDay) {
+                if (lastDay !== null) y += dayGap;
+                html += `<div class="journey-day-label">День ${stop.day} · ${stop.dayLabel}</div>`;
+                y += 34;
+                lastDay = stop.day;
+            }
+
+            const x = side === 'left' ? 78 : 22; // якорь ближе к противоположной от карточки стороне
+            points.push({ x, y: y + 20, stopIndex: i });
+
+            html += `
+                <div class="journey-stop side-${side}" data-anchor-index="${i}">
+                    <div class="journey-dot"></div>
+                    <div class="journey-card">
+                        <div class="journey-time">${stop.time}</div>
+                        <div class="journey-title">${stop.title}</div>
+                        <div class="journey-place">${stop.place}</div>
+                        <a class="journey-map-link" target="_blank" rel="noopener"
+                           href="https://www.google.com/maps?q=${encodeURIComponent(stop.map)}">
+                           Открыть на карте <i class="fa fa-external-link"></i>
+                        </a>
+                    </div>
+                </div>`;
+
+            side = side === 'left' ? 'right' : 'left';
+            y += rowHeight;
+        });
+
+        list.innerHTML = html;
+
+        const totalHeight = y + 10;
+        svg.setAttribute('viewBox', `0 0 100 ${totalHeight}`);
+
+        // Строим плавную кривую через все точки (catmull-rom -> bezier)
+        let d = `M ${points[0].x} ${points[0].y}`;
+        for (let i = 0; i < points.length - 1; i++) {
+            const p0 = points[i === 0 ? 0 : i - 1];
+            const p1 = points[i];
+            const p2 = points[i + 1];
+            const p3 = points[i + 2 < points.length ? i + 2 : i + 1];
+            const cp1x = p1.x + (p2.x - p0.x) / 6;
+            const cp1y = p1.y + (p2.y - p0.y) / 6;
+            const cp2x = p2.x - (p3.x - p1.x) / 6;
+            const cp2y = p2.y - (p3.y - p1.y) / 6;
+            d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+        }
+        path.setAttribute('d', d);
+
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = length;
+        path.style.strokeDashoffset = length;
+
+        return { path, heart, length, wrap: document.getElementById('journeyWrap'),
+                 stops: document.querySelectorAll('.journey-stop'), totalHeight };
+    }
+
+    let journeyState = null;
+    let journeyTicking = false;
+
+    function updateJourney() {
+        if (!journeyState) return;
+        const { path, heart, length, wrap, stops } = journeyState;
+        const rect = wrap.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+
+        // прогресс: 0 когда верх секции у нижнего края экрана, 1 когда низ секции у верхнего края
+        let progress = (vh * 0.75 - rect.top) / (rect.height + vh * 0.5);
+        progress = Math.max(0, Math.min(1, progress));
+
+        const offset = length * (1 - progress);
+        path.style.strokeDashoffset = offset;
+
+        const pt = path.getPointAtLength(length * progress);
+        heart.setAttribute('transform', `translate(${pt.x}, ${pt.y})`);
+
+        stops.forEach((el) => {
+            const idx = parseInt(el.dataset.anchorIndex, 10);
+            const stopProgress = (idx + 0.5) / stops.length;
+            if (progress >= stopProgress - 0.06) el.classList.add('visible');
+        });
+    }
+
+    function onScroll() {
+        if (journeyTicking) return;
+        journeyTicking = true;
+        requestAnimationFrame(() => { updateJourney(); journeyTicking = false; });
+    }
+
+    // ========== ДАННЫЕ ==========
+    let currentPhone = '';
+    let familyMembers = [];
+    let needsLodging = false;
+
+    // ========== DOM ==========
+    const phoneInput = document.getElementById('phoneInput');
+    const phoneNextBtn = document.getElementById('phoneNextBtn');
+    const phoneStep = document.getElementById('phoneStep');
+    const fullForm = document.getElementById('fullForm');
+    const displayPhone = document.getElementById('displayPhone');
+    const changePhoneBtn = document.getElementById('changePhoneBtn');
+    const mainNameInput = document.getElementById('mainName');
+    const familyList = document.getElementById('familyList');
+    const addMemberBtn = document.getElementById('addMemberBtn');
+    const day1Check = document.getElementById('day1Check');
+    const day2Check = document.getElementById('day2Check');
+    const lodgeYes = document.getElementById('lodgeYes');
+    const lodgeNo = document.getElementById('lodgeNo');
+    const submitBtn = document.getElementById('submitBtn');
+    const toast = document.getElementById('toast');
+
+    // ========== ТАЙМЕР ==========
+    function updateTimer() {
+        const target = new Date(2026, 8, 18, 0, 0, 0).getTime();
+        const now = Date.now();
+        let diff = Math.max(0, target - now);
+        const d = Math.floor(diff / 86400000); diff -= d * 86400000;
+        const h = Math.floor(diff / 3600000);  diff -= h * 3600000;
+        const m = Math.floor(diff / 60000);    diff -= m * 60000;
+        const s = Math.floor(diff / 1000);
+        document.getElementById('days').textContent = String(d).padStart(2, '0');
+        document.getElementById('hours').textContent = String(h).padStart(2, '0');
+        document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+        document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+    // ========== МАСКА ТЕЛЕФОНА ==========
+    phoneInput.addEventListener('input', function() {
+        let val = this.value.replace(/\D/g, '');
+        if (val.length > 11) val = val.slice(0, 11);
+        let formatted = '';
+        if (val.length > 0) {
+            formatted = '+7';
+            if (val.length > 1) formatted += ' ' + val.slice(1, 4);
+            if (val.length > 4) formatted += ' ' + val.slice(4, 7);
+            if (val.length > 7) formatted += ' ' + val.slice(7, 9);
+            if (val.length > 9) formatted += ' ' + val.slice(9, 11);
+        }
+        this.value = formatted;
+    });
+
+    // ========== ПЕРЕХОД К ПОЛНОЙ ФОРМЕ ==========
+    phoneNextBtn.addEventListener('click', function() {
+        const raw = phoneInput.value.replace(/\D/g, '');
+        if (raw.length !== 11) {
+            showToast('Введите корректный номер из 11 цифр', 'error');
+            return;
+        }
+        currentPhone = '+7' + raw.slice(1);
+        displayPhone.textContent = currentPhone;
+        phoneStep.style.display = 'none';
+        fullForm.classList.add('visible');
+
+        if (familyMembers.length === 0) addFamilyMember('', 'Друг');
+        checkExisting(currentPhone);
+    });
+
+    changePhoneBtn.addEventListener('click', function() {
+        fullForm.classList.remove('visible');
+        phoneStep.style.display = 'block';
+        phoneInput.focus();
+    });
+
+    // ========== ЧЛЕНЫ СЕМЬИ ==========
+    function addFamilyMember(name = '', role = 'Друг') {
+        familyMembers.push({ name, role });
+        renderFamilyMembers();
+    }
+    function removeFamilyMember(index) {
+        if (familyMembers.length <= 1) {
+            showToast('Должен быть хотя бы один член семьи', 'error');
+            return;
+        }
+        familyMembers.splice(index, 1);
+        renderFamilyMembers();
+    }
+    function renderFamilyMembers() {
+        familyList.innerHTML = '';
+        familyMembers.forEach((member, index) => {
+            const div = document.createElement('div');
+            div.className = 'family-member';
+            div.innerHTML = `
+                <input type="text" class="member-name" placeholder="ФИО" value="${member.name}" />
+                <select class="role-select">
+                    ${['Жена','Муж','Сын','Дочь','Бабушка','Дедушка','Тесть','Теща','Свекор','Свекровь','Зять','Сноха','Друг','Подруга','Ребенок','Другой']
+                        .map(r => `<option value="${r}" ${r === member.role ? 'selected' : ''}>${r}</option>`).join('')}
+                </select>
+                <button class="remove-btn" data-index="${index}"><i class="fa fa-times"></i></button>
+            `;
+            familyList.appendChild(div);
+            div.querySelector('.member-name').addEventListener('input', function() { familyMembers[index].name = this.value; });
+            div.querySelector('.role-select').addEventListener('change', function() { familyMembers[index].role = this.value; });
+            div.querySelector('.remove-btn').addEventListener('click', function() { removeFamilyMember(parseInt(this.dataset.index)); });
+        });
+    }
+    addMemberBtn.addEventListener('click', function() { addFamilyMember('', 'Друг'); });
+
+    // ========== НОЧЁВКА ==========
+    lodgeYes.addEventListener('click', function() { needsLodging = true; lodgeYes.classList.add('active'); lodgeNo.classList.remove('active'); });
+    lodgeNo.addEventListener('click', function() { needsLodging = false; lodgeNo.classList.add('active'); lodgeYes.classList.remove('active'); });
+
+    // ========== ПРОВЕРКА СУЩЕСТВУЮЩЕЙ ЗАПИСИ ==========
+    async function checkExisting(phone) {
+        try {
+            const resp = await fetch(`${SCRIPT_URL}?phone=${encodeURIComponent(phone)}`);
+            if (!resp.ok) return;
+            const data = await resp.json();
+            if (data.found && data.mainName) {
+                mainNameInput.value = data.mainName || '';
+                day1Check.checked = data.day1 !== false;
+                day2Check.checked = data.day2 !== false;
+                needsLodging = !!data.needsLodging;
+                if (needsLodging) { lodgeYes.classList.add('active'); lodgeNo.classList.remove('active'); }
+                else { lodgeNo.classList.add('active'); lodgeYes.classList.remove('active'); }
+                if (data.members && data.members.length) {
+                    familyMembers = data.members.map(m => ({ name: m.name || '', role: m.role || 'Друг' }));
+                    renderFamilyMembers();
+                }
+                showToast('📋 Данные этой семьи уже есть. Вы можете их обновить.', 'success');
+            }
+        } catch (e) { /* игнорируем */ }
+    }
+
+    // ========== ОТПРАВКА ==========
+    submitBtn.addEventListener('click', async function() {
+        const mainName = mainNameInput.value.trim();
+        if (!mainName) { showToast('Введите ФИО главного', 'error'); return; }
+        if (!day1Check.checked && !day2Check.checked) { showToast('Выберите хотя бы один день', 'error'); return; }
+
+        const members = [];
+        const nameInputs = document.querySelectorAll('.member-name');
+        const roleSelects = document.querySelectorAll('.role-select');
+        nameInputs.forEach((inp, i) => {
+            const name = inp.value.trim();
+            if (name) members.push({ name, role: roleSelects[i] ? roleSelects[i].value : 'Друг' });
+        });
+        if (members.length === 0) { showToast('Добавьте хотя бы одного члена семьи', 'error'); return; }
+
+        const payload = {
+            phone: currentPhone,
+            mainName: mainName,
+            day1: day1Check.checked,
+            day2: day2Check.checked,
+            needsLodging: needsLodging,
+            members: members
+        };
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Отправка...';
+
+        try {
+            await fetch(SCRIPT_URL, {
+                method: 'POST', mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            showToast('✅ Спасибо! Ваша семья подтверждена!', 'success');
+            submitBtn.textContent = '✅ Подтверждено!';
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa fa-check-circle"></i> Подтвердить';
+            }, 3000);
+        } catch (e) {
+            showToast('❌ Ошибка отправки. Попробуйте ещё раз.', 'error');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa fa-check-circle"></i> Подтвердить';
+        }
+    });
+
+    // ========== TOAST ==========
+    let toastTimeout;
+    function showToast(message, type = 'info') {
+        toast.textContent = message;
+        toast.className = 'toast';
+        if (type === 'success') toast.classList.add('success');
+        if (type === 'error') toast.classList.add('error');
+        toast.classList.add('show');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
+    // ========== АДМИНКА ==========
+    (function checkAdmin() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('admin') === ADMIN_SECRET) {
+            const adminDiv = document.createElement('div');
+            adminDiv.style.cssText = `
+                position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+                background:#3E2C21;color:#fff;padding:20px 30px;border-radius:20px;
+                z-index:1000;text-align:center;max-width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.3);
+            `;
+            adminDiv.innerHTML = `
+                <h3 style="font-family:'Leckerli One',cursive;margin:0 0 8px;">🔐 Админ-панель</h3>
+                <p style="margin:4px 0;font-size:14px;opacity:0.8;">Все ответы гостей в Google Таблице</p>
+                <div style="background:#5B3524;border-radius:12px;padding:10px;margin:10px 0;font-size:12px;word-break:break-all;font-family:monospace;">
+                    Откройте вашу Google Таблицу
+                </div>
+                <button onclick="this.parentElement.remove()" style="
+                    background:#E7C7C2;border:none;padding:8px 24px;border-radius:40px;
+                    color:#3E2C21;font-size:14px;cursor:pointer;font-family:'Cormorant Infant',serif;
+                ">Закрыть</button>
+            `;
+            document.body.appendChild(adminDiv);
+        }
+    })();
+
+    // ========== ИНИЦИАЛИЗАЦИЯ ==========
+    journeyState = buildJourney();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function() { journeyState = buildJourney(); updateJourney(); });
+    updateJourney();
+
+    if (familyMembers.length === 0) {
+        setTimeout(() => addFamilyMember('', 'Друг'), 100);
+    }
+
+    console.log('✅ Сайт Никиты и Оксаны загружен!');
+})();
+</script>
+
+</body>
+</html>
