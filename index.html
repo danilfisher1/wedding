@@ -20,9 +20,11 @@
             --gold:      #C9A063;   /* кремово-золотой */
             --cocoa:     #6B4226;   /* глубокий коричневый — CTA / линия / акцент */
             --ink:       #3B2A1F;   /* основной текст */
-            --muted:     #93806C;   /* второстепенный текст */
+            --muted:     #6E5A45;   /* второстепенный текст — AA 5.9:1 на bg */
+            --gold-text: #7A5B24;   /* золотой для читаемых лейблов — AA 5.7:1 */
             --hair:      rgba(107, 66, 38, 0.20);
             --line-col:  #C08A78;   /* цвет линии таймлайна */
+            --focus:     0 0 0 3px rgba(107,66,38,0.28);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -105,7 +107,7 @@
         /* ===== SECTIONS ===== */
         .sec { padding: 52px 24px; position: relative; }
         .sec.alt { background: var(--panel); }
-        .sec-eyebrow { text-align: center; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 8px; }
+        .sec-eyebrow { text-align: center; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-text); font-weight: 700; margin-bottom: 8px; }
         .sec-title { font-family: 'Great Vibes', cursive; font-size: 40px; color: var(--cocoa); text-align: center; margin-bottom: 6px; }
         .sec-lead { text-align: center; font-size: 16.5px; font-weight: 300; color: var(--ink); margin-bottom: 8px; }
         .rule { width: 40px; height: 1px; background: var(--hair); margin: 16px auto; }
@@ -113,7 +115,7 @@
 
         .fact-grid { display: flex; gap: 10px; margin-top: 18px; }
         .fact { flex: 1; text-align: center; padding: 16px 10px; border: 1px solid var(--hair); border-radius: 4px; }
-        .fact .k { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 700; }
+        .fact .k { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-text); font-weight: 700; }
         .fact .v { font-size: 16.5px; margin-top: 4px; }
 
         /* ===== TIMELINE ("Наш путь") ===== */
@@ -129,7 +131,7 @@
             font-family: 'Great Vibes', cursive; font-size: 26px; color: var(--cocoa);
         }
         .tl-day:not(:first-child) { margin-top: 40px; }
-        .tl-day span { display: block; font-family: 'Cormorant Infant', serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-top: -4px; }
+        .tl-day span { display: block; font-family: 'Cormorant Infant', serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-text); font-weight: 700; margin-top: -4px; }
 
         .event-row { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 42px 68px; align-items: center; column-gap: 4px; min-height: 128px; }
         .event-row.rev { grid-template-columns: 68px 42px 1fr; }
@@ -186,12 +188,17 @@
         .lodge { margin: 12px 0 10px; padding: 14px; background: var(--panel); border-radius: 10px; }
         .lodge .q { font-weight: 600; margin-bottom: 8px; }
         .lodge-opts { display: flex; gap: 10px; }
-        .lodge-opts div { flex: 1; text-align: center; padding: 10px; border-radius: 10px; border: 1.5px solid var(--hair); font-size: 15px; background: #fff; }
+        .lodge-opts div { flex: 1; text-align: center; padding: 12px 10px; border-radius: 10px; border: 1.5px solid var(--hair); font-size: 15px; background: #fff; cursor: pointer; transition: all .15s ease; min-height: 44px; display: flex; align-items: center; justify-content: center; }
         .lodge-opts div.on { background: var(--cocoa); border-color: var(--cocoa); color: #fff; }
 
-        .btn-submit { width: 100%; padding: 15px; background: var(--cocoa); border: none; border-radius: 40px; font-family: 'Great Vibes', cursive; font-size: 22px; color: #fff; margin-top: 12px; }
+        .btn-submit { width: 100%; padding: 15px; background: var(--cocoa); border: none; border-radius: 40px; font-family: 'Great Vibes', cursive; font-size: 22px; color: #fff; margin-top: 12px; transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 6px 18px rgba(59,42,31,0.22); }
+        .btn-submit:active:not(:disabled) { transform: scale(0.97); box-shadow: 0 3px 10px rgba(59,42,31,0.22); }
         .btn-submit:disabled { opacity: 0.55; }
-        .btn-phone { width: 100%; padding: 15px; background: var(--rose); border: none; border-radius: 40px; font-size: 17px; color: var(--cocoa); font-weight: 600; }
+        .btn-phone { width: 100%; padding: 15px; background: var(--cocoa); border: none; border-radius: 40px; font-size: 17px; color: #fff; font-weight: 600; transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 6px 18px rgba(59,42,31,0.22); }
+        .btn-phone:active { transform: scale(0.97); box-shadow: 0 3px 10px rgba(59,42,31,0.22); }
+        .btn-submit:focus-visible, .btn-phone:focus-visible, input:focus-visible, select:focus-visible, .lodge-opts div:focus-visible, .fam-row .rm:focus-visible {
+            outline: none; box-shadow: var(--focus);
+        }
 
         .full-form { display: none; margin-top: 12px; border-top: 1px solid var(--hair); padding-top: 16px; }
         .full-form.on { display: block; }
@@ -221,7 +228,7 @@
 
 <div class="app" id="app">
 
-    <div class="toast" id="toast"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <!-- ===== HERO ===== -->
     <section class="hero">
@@ -357,9 +364,9 @@
 
                 <div class="lodge">
                     <div class="q">Нужна ли ночёвка?</div>
-                    <div class="lodge-opts">
-                        <div id="lodgeYes">Да, нужна</div>
-                        <div id="lodgeNo" class="on">Нет, спасибо</div>
+                    <div class="lodge-opts" role="radiogroup" aria-label="Нужна ли ночёвка?">
+                        <div id="lodgeYes" role="radio" aria-checked="false" tabindex="0">Да, нужна</div>
+                        <div id="lodgeNo" role="radio" aria-checked="true" tabindex="0" class="on">Нет, спасибо</div>
                     </div>
                 </div>
 
@@ -376,7 +383,7 @@
 (function() {
     'use strict';
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxR5YQuWebi_UOKnrB4CHWcsi3-Ggi-PIIl4gtpaOIOiAq9hF-mR3UBLYFrU7QxEH-34A/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxJTT4lpXSqqNyJbJgG_5mkyVm357dnlIEWuLj9H0u_YzPoXQqm1nHli9Sk9sJiQVazsw/exec';
 
     // ---------- ПРОГРАММА ДНЕЙ ----------
     const STOPS = [
@@ -575,8 +582,19 @@
     }
     addMemberBtn.addEventListener('click', () => addFamilyMember('', 'Друг'));
 
-    lodgeYes.addEventListener('click', () => { needsLodging = true; lodgeYes.classList.add('on'); lodgeNo.classList.remove('on'); });
-    lodgeNo.addEventListener('click', () => { needsLodging = false; lodgeNo.classList.add('on'); lodgeYes.classList.remove('on'); });
+    function setLodging(value) {
+        needsLodging = value;
+        lodgeYes.classList.toggle('on', value);
+        lodgeNo.classList.toggle('on', !value);
+        lodgeYes.setAttribute('aria-checked', String(value));
+        lodgeNo.setAttribute('aria-checked', String(!value));
+    }
+    [lodgeYes, lodgeNo].forEach((el, i) => {
+        el.addEventListener('click', () => setLodging(i === 0));
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLodging(i === 0); }
+        });
+    });
 
     async function checkExisting(phone) {
         try {
@@ -587,9 +605,7 @@
                 mainNameInput.value = data.mainName || '';
                 day1Check.checked = data.day1 !== false;
                 day2Check.checked = data.day2 !== false;
-                needsLodging = !!data.needsLodging;
-                if (needsLodging) { lodgeYes.classList.add('on'); lodgeNo.classList.remove('on'); }
-                else { lodgeNo.classList.add('on'); lodgeYes.classList.remove('on'); }
+                setLodging(!!data.needsLodging);
                 if (data.members && data.members.length) {
                     familyMembers = data.members.map(m => ({ name: m.name || '', role: m.role || 'Друг' }));
                     renderFamily();
