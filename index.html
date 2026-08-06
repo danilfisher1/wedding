@@ -244,6 +244,14 @@
         @media (prefers-reduced-motion: reduce) {
             .reveal, .hero-inner, .scroll-cue { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
         }
+		/* Блокировка скролла только на время анимации */
+.intro-overlay {
+    touch-action: none;
+}
+.intro-overlay.intro-leaving {
+    pointer-events: none;
+    touch-action: auto;
+}
     </style>
 </head>
 <body>
@@ -698,19 +706,35 @@
         toastTimeout = setTimeout(() => toast.classList.remove('show'), 3600);
     }
 
-    // ---------- ЗАСТАВКА ПРИ ЗАГРУЗКЕ ----------
+        // ---------- ЗАСТАВКА ПРИ ЗАГРУЗКЕ ----------
     function runIntro() {
         const overlay = document.getElementById('introOverlay');
         if (!overlay) return;
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (reduceMotion) { overlay.remove(); return; }
 
-        // падение фото сверху
+        // Падение фото
         requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('intro-drop')));
-        // пауза, чтобы фото было видно, затем — уменьшение и исчезновение
-        setTimeout(() => overlay.classList.add('intro-leaving'), 1500);
-        // окончательно убираем оверлей из DOM
-        setTimeout(() => overlay.remove(), 1500 + 700);
+        
+        // Ускоряем процесс: через 1.2 секунды начинаем исчезновение
+        setTimeout(() => overlay.classList.add('intro-leaving'), 1200);
+        
+        // Полностью удаляем через 1.6 секунды (вместо 2.2)
+        setTimeout(() => {
+            overlay.remove();
+            // Принудительно разрешаем скролл
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+        }, 1600);
+        
+        // Запасной таймер на случай, если что-то пошло не так
+        setTimeout(() => {
+            if (document.getElementById('introOverlay')) {
+                document.getElementById('introOverlay').remove();
+                document.body.style.overflow = '';
+                document.documentElement.style.overflow = '';
+            }
+        }, 2500);
     }
 
     // ---------- INIT ----------
