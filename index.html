@@ -6,7 +6,6 @@
     <title>Никита &amp; Оксана — Свадьба 2026</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <style>
         /* ===================================================== */
@@ -49,7 +48,32 @@
 
         .script { font-family: 'Great Vibes', cursive; }
 
-        /* ===== HERO ===== */
+        /* ===== ЗАСТАВКА ПРИ ЗАГРУЗКЕ ===== */
+        .intro-overlay {
+            position: fixed; inset: 0; z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(175deg, #F6E9D6 0%, var(--panel) 55%, var(--rose-soft) 100%);
+            overflow: hidden;
+            transition: opacity .7s ease;
+        }
+        .intro-overlay.intro-leaving { opacity: 0; pointer-events: none; }
+        .intro-photos { display: flex; gap: 5vw; }
+        .intro-polaroid {
+            background: #fff; padding: 3vw 3vw 9vw; width: 40vw; max-width: 190px;
+            box-shadow: 0 24px 60px rgba(59,42,31,0.32);
+            transform: translateY(-140vh) rotate(-9deg);
+        }
+        .intro-polaroid.intro-p2 { transform: translateY(-140vh) rotate(9deg); }
+        .intro-polaroid img { width: 100%; height: 46vw; max-height: 230px; object-fit: cover; display: block; background: var(--panel); }
+        .intro-overlay.intro-drop .intro-p1 { animation: introDrop1 1s cubic-bezier(.3,1.4,.55,1) forwards; }
+        .intro-overlay.intro-drop .intro-p2 { animation: introDrop2 1s cubic-bezier(.3,1.4,.55,1) .13s forwards; }
+        @keyframes introDrop1 { to { transform: translateY(0) rotate(-9deg); } }
+        @keyframes introDrop2 { to { transform: translateY(0) rotate(9deg); } }
+        .intro-overlay.intro-leaving .intro-photos { animation: introAway .65s ease forwards; }
+        @keyframes introAway { to { transform: scale(0.28) translateY(-6vh); opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) { .intro-overlay { display: none; } }
+
+
         .hero {
             padding: 46px 22px 26px;
             text-align: center;
@@ -70,7 +94,7 @@
                 radial-gradient(circle at 88% 6%, rgba(221,172,165,0.35), transparent 40%);
             pointer-events: none;
         }
-        .hero-inner { position: relative; z-index: 2; width: 100%; opacity: 0; animation: rise 0.9s cubic-bezier(.16,1,.3,1) 0.1s forwards; }
+        .hero-inner { position: relative; z-index: 2; width: 100%; opacity: 0; animation: rise 0.9s cubic-bezier(.16,1,.3,1) 1.5s forwards; }
 
         .polaroids { display: flex; gap: 14px; justify-content: center; margin-bottom: 22px; }
         .polaroid {
@@ -99,7 +123,8 @@
         .timer b { display: block; font-size: 22px; color: var(--cocoa); font-weight: 700; line-height: 1; }
         .timer i { display: block; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); font-style: normal; margin-top: 2px; }
 
-        .scroll-cue { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); font-size: 22px; color: var(--cocoa); opacity: 0.5; animation: bob 2s ease-in-out infinite; z-index: 2; }
+        .scroll-cue { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); color: var(--cocoa); opacity: 0; animation: bob 2s ease-in-out 2.4s infinite, cueFadeIn .5s ease 2.4s forwards; z-index: 2; display: flex; }
+        @keyframes cueFadeIn { to { opacity: 0.5; } }
 
         @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes bob { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
@@ -111,7 +136,7 @@
         .sec-title { font-family: 'Great Vibes', cursive; font-size: 40px; color: var(--cocoa); text-align: center; margin-bottom: 6px; }
         .sec-lead { text-align: center; font-size: 16.5px; font-weight: 300; color: var(--ink); margin-bottom: 8px; }
         .rule { width: 40px; height: 1px; background: var(--hair); margin: 16px auto; }
-        .rule::before { content: '♥'; display: block; text-align: center; color: var(--rose); font-size: 11px; margin-top: -8px; background: inherit; width: 20px; margin-left: auto; margin-right: auto; }
+        .rule-heart { width: 12px; height: 11px; color: var(--rose); display: block; margin: -3px auto 0; }
 
         .fact-grid { display: flex; gap: 10px; margin-top: 18px; }
         .fact { flex: 1; text-align: center; padding: 16px 10px; border: 1px solid var(--hair); border-radius: 4px; }
@@ -121,8 +146,8 @@
         /* ===== TIMELINE ("Наш путь") ===== */
         .tl-wrap { position: relative; margin-top: 14px; }
         .tl-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; pointer-events: none; }
-        .tl-path { fill: none; stroke: var(--line-col); stroke-width: 2; stroke-linecap: round; }
-        .tl-dot-ring { fill: var(--bg); stroke: var(--cocoa); stroke-width: 1.6; }
+        .tl-path { fill: none; stroke: var(--line-col); stroke-width: 1; stroke-linecap: round; }
+        .tl-dot { fill: var(--cocoa); stroke: none; }
         .tl-heart { transition: transform 0.05s linear; filter: drop-shadow(0 1px 1.5px rgba(59,42,31,0.35)); }
         .tl-heart-shape { fill: var(--cocoa); }
 
@@ -136,7 +161,8 @@
         .ev-title { font-size: 17px; font-weight: 600; margin-top: 3px; }
         .ev-desc { font-size: 13px; font-style: italic; color: var(--ink); margin-top: 3px; opacity: 0.85; }
         .ev-place { font-size: 13px; color: var(--muted); margin-top: 3px; }
-        .ev-map { display: inline-block; margin-top: 5px; font-size: 12px; color: var(--cocoa); border-bottom: 1px dotted var(--cocoa); text-decoration: none; }
+        .ev-map { display: inline-flex; align-items: center; gap: 3px; margin-top: 5px; font-size: 12px; color: var(--cocoa); border-bottom: 1px dotted var(--cocoa); text-decoration: none; }
+        .ev-map-arrow { width: 11px; height: 11px; flex-shrink: 0; }
 
         .ev-icon svg { width: 46px; height: 46px; color: var(--cocoa); opacity: 0.85; }
 
@@ -150,6 +176,7 @@
         .day-block { border: 1px solid var(--hair); border-radius: 4px; padding: 20px; margin-top: 16px; }
         .day-block .dt { font-family: 'Great Vibes', cursive; font-size: 24px; color: var(--cocoa); margin-bottom: 4px; }
         .badge { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--cocoa); color: var(--cocoa); padding: 8px 18px; border-radius: 30px; font-size: 13px; letter-spacing: 0.4px; }
+        .badge-icon { width: 14px; height: 14px; flex-shrink: 0; }
 
         /* ===== RSVP ===== */
         .form-shell { border: 1px solid var(--hair); border-radius: 6px; padding: 26px 20px; margin-top: 8px; background: var(--bg); }
@@ -166,7 +193,8 @@
         .fam-row { display: flex; gap: 8px; align-items: center; background: var(--panel); border-radius: 10px; padding: 9px 10px; margin-bottom: 8px; }
         .fam-row input { flex: 1; margin-bottom: 0 !important; padding: 8px 10px; font-size: 15px; background: #fff !important; border-radius: 8px; border: none !important; }
         .fam-row select { flex: 0 0 96px; margin-bottom: 0 !important; padding: 8px 6px; font-size: 13.5px; background: #fff !important; border-radius: 8px; border: none !important; }
-        .fam-row .rm { background: none; border: none; color: var(--rose); font-size: 18px; cursor: pointer; }
+        .fam-row .rm { background: none; border: none; color: var(--rose); cursor: pointer; padding: 4px; display: flex; }
+        .fam-row .rm svg { width: 16px; height: 16px; }
 
         .add-member { background: none; border: 1.5px dashed var(--rose); border-radius: 10px; padding: 10px; width: 100%; font-size: 15px; color: var(--cocoa); margin-top: 4px; }
 
@@ -181,10 +209,12 @@
         .lodge-opts div { flex: 1; text-align: center; padding: 12px 10px; border-radius: 10px; border: 1.5px solid var(--hair); font-size: 15px; background: #fff; cursor: pointer; transition: all .15s ease; min-height: 44px; display: flex; align-items: center; justify-content: center; }
         .lodge-opts div.on { background: var(--cocoa); border-color: var(--cocoa); color: #fff; }
 
-        .btn-submit { width: 100%; padding: 15px; background: var(--cocoa); border: none; border-radius: 40px; font-family: 'Great Vibes', cursive; font-size: 22px; color: #fff; margin-top: 12px; transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 6px 18px rgba(59,42,31,0.22); }
+        .btn-submit { width: 100%; padding: 15px; background: var(--cocoa); border: none; border-radius: 40px; font-family: 'Great Vibes', cursive; font-size: 22px; color: #fff; margin-top: 12px; transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 6px 18px rgba(59,42,31,0.22); display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-check { width: 19px; height: 19px; }
         .btn-submit:active:not(:disabled) { transform: scale(0.97); box-shadow: 0 3px 10px rgba(59,42,31,0.22); }
         .btn-submit:disabled { opacity: 0.55; }
-        .btn-phone { width: 100%; padding: 15px; background: var(--cocoa); border: none; border-radius: 40px; font-size: 17px; color: #fff; font-weight: 600; transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 6px 18px rgba(59,42,31,0.22); }
+        .btn-phone { width: 100%; padding: 15px; background: var(--cocoa); border: none; border-radius: 40px; font-size: 17px; color: #fff; font-weight: 600; transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 6px 18px rgba(59,42,31,0.22); display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Cormorant Infant', serif; }
+        .btn-arrow { width: 16px; height: 16px; }
         .btn-phone:active { transform: scale(0.97); box-shadow: 0 3px 10px rgba(59,42,31,0.22); }
         .btn-submit:focus-visible, .btn-phone:focus-visible, input:focus-visible, select:focus-visible, .lodge-opts div:focus-visible, .fam-row .rm:focus-visible {
             outline: none; box-shadow: var(--focus);
@@ -205,6 +235,7 @@
         .toast.err { background: #A3543F; }
 
         .foot { text-align: center; padding: 26px 20px 20px; font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--hair); }
+        .foot-heart { width: 11px; height: 11px; vertical-align: -1px; color: var(--rose); }
 
         .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
         .reveal.show { opacity: 1; transform: translateY(0); }
@@ -215,6 +246,13 @@
     </style>
 </head>
 <body>
+
+<div class="intro-overlay" id="introOverlay" aria-hidden="true">
+    <div class="intro-photos">
+        <div class="intro-polaroid intro-p1"><img src="Nikita.jpg" alt="" /></div>
+        <div class="intro-polaroid intro-p2"><img src="Oksana.jpg" alt="" /></div>
+    </div>
+</div>
 
 <div class="app" id="app">
 
@@ -245,7 +283,7 @@
                 <div><b id="s">--</b><i>сек</i></div>
             </div>
         </div>
-        <div class="scroll-cue">⌄</div>
+        <div class="scroll-cue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M6 9l6 6 6-6"/></svg></div>
     </section>
 
     <!-- ===== ПРИВЕТСТВИЕ ===== -->
@@ -255,7 +293,7 @@
         <p class="sec-lead">
             Каждый из вас — особенная часть нашей жизни. Будем бесконечно счастливы увидеть вас, обнять и разделить вместе с вами день нашей свадьбы навсегда!
         </p>
-        <div class="rule"></div>
+        <div class="rule"><svg class="rule-heart" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
     </section>
 
     <!-- ===== НАШ ПУТЬ ===== -->
@@ -273,8 +311,11 @@
                 <path class="tl-path" id="tlPath" d=""></path>
                 <g id="tlDots"></g>
                 <g class="tl-heart" id="tlHeart">
-                    <path class="tl-heart-shape" d="M0,1.3 C0,0.55 0.6,0 1.25,0 C1.7,0 2.1,0.25 2.3,0.65 C2.5,0.25 2.9,0 3.35,0 C4,0 4.6,0.55 4.6,1.3 C4.6,2.4 3.2,3.3 2.3,4 C1.4,3.3 0,2.4 0,1.3 Z"
-                          transform="translate(-2.3,-2)"></path>
+                    <svg id="tlHeartSvg" x="-10.5" y="-9.75" width="21" height="19.5" viewBox="0 0 12796 11888" overflow="visible">
+                        <g transform="rotate(180 6398 5944)">
+                            <path class="tl-heart-shape" d="M3250 11884 c-25 -2 -106 -11 -180 -20 -1485 -172 -2704 -1295 -3001 -2764 -133 -660 -67 -1507 171 -2223 252 -753 675 -1411 1397 -2172 342 -360 634 -630 1588 -1470 231 -203 488 -430 570 -505 1024 -920 1735 -1692 2346 -2547 l130 -183 132 0 132 1 130 192 c557 822 1212 1560 2185 2461 191 178 408 373 1027 923 956 852 1445 1343 1841 1850 643 825 968 1603 1064 2553 19 196 17 665 -5 835 -105 805 -441 1497 -998 2054 -557 557 -1250 894 -2054 998 -193 24 -613 24 -810 0 -733 -93 -1379 -387 -1920 -874 -191 -172 -406 -417 -535 -610 -30 -45 -57 -82 -60 -82 -3 0 -30 37 -60 82 -129 193 -344 438 -535 610 -531 478 -1170 773 -1878 867 -146 20 -562 34 -677 24z"></path>
+                        </g>
+                    </svg>
                 </g>
             </svg>
             <div id="tlList"></div>
@@ -286,7 +327,7 @@
         <div class="sec-eyebrow">Как одеться</div>
         <div class="sec-title">Дресс-код</div>
 
-        <div class="day-block">
+        <div class="day-block reveal">
             <p style="font-size:15px;font-weight:300;">Мы очень старались сделать нашу свадьбу стильной — будем рады, если вы поддержите нашу цветовую гамму: спокойные, естественные оттенки.</p>
             <div class="palette-row">
                 <div class="swatch"><div class="c"><img src="1.png" alt="молочный" /></div><div class="n">молочный</div></div>
@@ -297,8 +338,8 @@
             </div>
         </div>
 
-        <div style="text-align:center;margin-top:18px;">
-            <span class="badge"><i class="fa fa-moon-o"></i>&nbsp; Вечер 18 сентября — только для взрослых</span>
+        <div class="reveal" style="text-align:center;margin-top:18px;">
+            <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12.3 2.5c-5.2.4-9.3 4.7-9.3 9.9 0 5.5 4.5 10 10 10 4.1 0 7.6-2.5 9.1-6-1 .4-2.1.6-3.2.6-5 0-9-4-9-9 0-2 .7-3.8 1.8-5.3-.1 0-.3-.1-.4-.2z"/></svg>Вечер 18 сентября — только для взрослых</span>
         </div>
         <p class="sec-lead" style="margin-top:12px;font-size:14.5px;">
             Мы приняли непростое решение сделать этот вечер только для взрослых — хотим, чтобы все гости, включая родителей, могли полностью расслабиться и насладиться праздником.
@@ -315,7 +356,7 @@
             <br><br>
             Мы не сможем насладиться цветами в полной мере, поэтому будем рады любой альтернативе — вино или денежный эквивалент.
         </p>
-        <div class="rule"></div>
+        <div class="rule"><svg class="rule-heart" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
     </section>
 
     <!-- ===== RSVP ===== -->
@@ -324,12 +365,12 @@
         <div class="sec-title">Подтверждение присутствия</div>
         <p class="sec-lead">Пожалуйста, подтвердите своё присутствие до <strong>10 сентября 2026</strong></p>
 
-        <div class="form-shell">
+        <div class="form-shell reveal">
             <div id="phoneStep">
                 <label for="phoneInput">Номер телефона семьи</label>
                 <p class="hint">Введите номер, по которому мы сможем с вами связаться</p>
                 <input type="tel" id="phoneInput" placeholder="+7 900 123 45 67" maxlength="18" />
-                <button class="btn-phone" id="phoneNextBtn">Продолжить →</button>
+                <button class="btn-phone" id="phoneNextBtn">Продолжить <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
             </div>
 
             <div class="full-form" id="fullForm">
@@ -359,7 +400,7 @@
         </div>
     </section>
 
-    <div class="foot">© 2026 Никита &amp; Оксана · Соль-Илецк, 18 сентября ♥</div>
+    <div class="foot reveal">© 2026 Никита &amp; Оксана · Соль-Илецк, 18 сентября <svg class="foot-heart" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
 </div>
 
 <script>
@@ -389,16 +430,22 @@
         const svg = document.getElementById('tlSvg');
         const path = document.getElementById('tlPath');
         const dotsG = document.getElementById('tlDots');
+        const wrap = document.getElementById('tlWrap');
+
+        // используем РЕАЛЬНУЮ ширину контейнера как систему координат (а не абстрактные
+        // "100 единиц"), чтобы x и y масштабировались одинаково — без этого линия, точки
+        // и сердечко растягивались неравномерно и сердечко казалось сплюснутым
+        const wrapW = wrap.getBoundingClientRect().width || 380;
 
         const rowH = 128;
         let y = 0, sideRev = false;
         // виртуальная точка старта — прямо под "18" в мини-календаре сверху
-        const pts = [{ x: 50, y: 0 }];
+        const pts = [{ x: wrapW * 0.5, y: 0 }];
         let html = '';
 
         STOPS.forEach((s, i) => {
             const cy = y + rowH / 2;
-            pts.push({ x: sideRev ? 23 : 75, y: cy });
+            pts.push({ x: sideRev ? wrapW * 0.23 : wrapW * 0.75, y: cy });
             html += `
                 <div class="event-row reveal ${sideRev ? 'rev' : ''}" style="transition-delay:${i * 90}ms;" data-idx="${i}">
                     <div class="ev-text">
@@ -406,7 +453,7 @@
                         <div class="ev-title">${s.title}</div>
                         ${s.desc ? `<div class="ev-desc">${s.desc}</div>` : ''}
                         <div class="ev-place">${s.place}</div>
-                        <a class="ev-map" target="_blank" rel="noopener" href="https://www.google.com/maps?q=${encodeURIComponent(s.map)}">на карте ↗</a>
+                        <a class="ev-map" target="_blank" rel="noopener" href="https://www.google.com/maps?q=${encodeURIComponent(s.map)}">на карте <svg class="ev-map-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 L17 7"/><path d="M9 7 H17 V15"/></svg></a>
                     </div>
                     <div></div>
                     <div class="ev-icon">${ICONS[s.icon] || ''}</div>
@@ -417,7 +464,7 @@
 
         list.innerHTML = html;
         const totalH = y + 20;
-        svg.setAttribute('viewBox', `0 0 100 ${totalH}`);
+        svg.setAttribute('viewBox', `0 0 ${wrapW} ${totalH}`);
 
         // плавная S-образная волна между двумя колонками — как в референсе
         let d = `M ${pts[0].x} ${pts[0].y}`;
@@ -428,14 +475,14 @@
         }
         path.setAttribute('d', d);
 
-        // точки-узлы прямо в svg (пропускаем виртуальный старт под календарём)
-        dotsG.innerHTML = pts.slice(1).map(p => `<circle class="tl-dot-ring" cx="${p.x}" cy="${p.y}" r="1.8"></circle>`).join('');
-
         const len = path.getTotalLength();
         path.style.strokeDasharray = len;
         path.style.strokeDashoffset = len;
 
-        return { path, len, wrap: document.getElementById('tlWrap') };
+        // точки-узлы — теперь просто круги фиксированного радиуса в px, без искажений
+        dotsG.innerHTML = pts.slice(1).map(p => `<circle class="tl-dot" cx="${p.x}" cy="${p.y}" r="3.2"></circle>`).join('');
+
+        return { path, len, wrap };
     }
 
     let ticking = false;
@@ -545,7 +592,7 @@
                     ${['Жена','Муж','Сын','Дочь','Бабушка','Дедушка','Тесть','Теща','Свекор','Свекровь','Зять','Сноха','Друг','Подруга','Ребенок','Другой']
                         .map(r => `<option value="${r}" ${r === m.role ? 'selected' : ''}>${r}</option>`).join('')}
                 </select>
-                <button class="rm" data-i="${i}"><i class="fa fa-times"></i></button>`;
+                <button class="rm" data-i="${i}" aria-label="Убрать"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`;
             familyList.appendChild(div);
             div.querySelector('.mn').addEventListener('input', function() { familyMembers[i].name = this.value; });
             div.querySelector('.mr').addEventListener('change', function() { familyMembers[i].role = this.value; });
@@ -604,7 +651,7 @@
         try {
             await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             showToast('Спасибо! Ваша семья подтверждена', 'ok');
-            submitBtn.textContent = 'Подтверждено ✓';
+            submitBtn.innerHTML = 'Подтверждено <svg class="btn-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
             setTimeout(() => { submitBtn.disabled = false; submitBtn.textContent = 'Подтвердить'; }, 3000);
         } catch (e) {
             showToast('Ошибка отправки, попробуйте ещё раз', 'err');
@@ -620,7 +667,23 @@
         toastTimeout = setTimeout(() => toast.classList.remove('show'), 3600);
     }
 
+    // ---------- ЗАСТАВКА ПРИ ЗАГРУЗКЕ ----------
+    function runIntro() {
+        const overlay = document.getElementById('introOverlay');
+        if (!overlay) return;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduceMotion) { overlay.remove(); return; }
+
+        // падение фото сверху
+        requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('intro-drop')));
+        // пауза, чтобы фото было видно, затем — уменьшение и исчезновение
+        setTimeout(() => overlay.classList.add('intro-leaving'), 1500);
+        // окончательно убираем оверлей из DOM
+        setTimeout(() => overlay.remove(), 1500 + 700);
+    }
+
     // ---------- INIT ----------
+    runIntro();
     updateTimer();
     setInterval(updateTimer, 1000);
 
