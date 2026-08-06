@@ -422,7 +422,7 @@
 (function() {
     'use strict';
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxR5YQuWebi_UOKnrB4CHWcsi3-Ggi-PIIl4gtpaOIOiAq9hF-mR3UBLYFrU7QxEH-34A/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyBlAI1_BLOneR4CN1pI4hyj0uul0FmRhSyL1frPLO6d6wMZD6wxH1OiVJ0kUkxC_N9Mw/exec';
 
     // ---------- ПРОГРАММА ДНЯ ----------
     const STOPS = [
@@ -663,7 +663,7 @@
         } catch (e) {}
     }
 
-        submitBtn.addEventListener('click', async function() {
+            submitBtn.addEventListener('click', async function() {
         const mainName = mainNameInput.value.trim();
         if (!mainName) { showToast('Введите ФИО главного', 'err'); return; }
         
@@ -675,7 +675,7 @@
         });
         // Проверка УДАЛЕНА — теперь можно отправлять без членов семьи
 
-        const payload = { phone: currentPhone, mainName, day1: true, day2: false, needsLodging, members };
+        const payload = { phone: currentPhone, mainName, needsLodging, members };
 
         submitBtn.disabled = true;
         submitBtn.textContent = 'Отправка...';
