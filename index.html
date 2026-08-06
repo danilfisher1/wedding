@@ -252,9 +252,41 @@
     pointer-events: none;
     touch-action: auto;
 }
+/* ===== АДАПТАЦИЯ ДРЕСС-КОДА ===== */
+@media (max-width: 420px) {
+    .swatch {
+        width: 44px;
+    }
+    .swatch .c {
+        width: 40px;
+        height: 40px;
+    }
+    .palette-row {
+        gap: 6px;
+    }
+    .swatch .n {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 370px) {
+    .swatch {
+        width: 36px;
+    }
+    .swatch .c {
+        width: 32px;
+        height: 32px;
+    }
+    .palette-row {
+        gap: 4px;
+    }
+    .swatch .n {
+        font-size: 8px;
+    }
+}
     </style>
 </head>
-<body>
+<body style="overflow:auto;height:auto;">
 
 <div class="intro-overlay" id="introOverlay" aria-hidden="true">
     <div class="intro-photos">
