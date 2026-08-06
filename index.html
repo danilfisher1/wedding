@@ -395,7 +395,7 @@
                 <input type="text" id="mainName" placeholder="Иванов Иван Иванович" />
 
                 <label>ФИО тех, кто придёт</label>
-                <p class="hint">Добавьте всех членов семьи, которые будут с вами</p>
+<p class="hint">Если вы идёте один — оставьте поле пустым. Если с семьёй — добавьте всех.</p>
                 <div id="familyList"></div>
                 <button class="add-member" id="addMemberBtn">+ Добавить члена семьи</button>
 
@@ -663,7 +663,7 @@
         } catch (e) {}
     }
 
-    submitBtn.addEventListener('click', async function() {
+        submitBtn.addEventListener('click', async function() {
         const mainName = mainNameInput.value.trim();
         if (!mainName) { showToast('Введите ФИО главного', 'err'); return; }
         
@@ -673,7 +673,7 @@
             const roleEl = document.querySelectorAll('.mr')[i];
             if (name) members.push({ name, role: roleEl ? roleEl.value : 'Друг' });
         });
-        if (members.length === 0) { showToast('Добавьте хотя бы одного члена семьи', 'err'); return; }
+        // Проверка УДАЛЕНА — теперь можно отправлять без членов семьи
 
         const payload = { phone: currentPhone, mainName, day1: true, day2: false, needsLodging, members };
 
