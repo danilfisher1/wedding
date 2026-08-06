@@ -706,35 +706,48 @@
         toastTimeout = setTimeout(() => toast.classList.remove('show'), 3600);
     }
 
-        // ---------- ЗАСТАВКА ПРИ ЗАГРУЗКЕ ----------
+            // ---------- ЗАСТАВКА ПРИ ЗАГРУЗКЕ ----------
     function runIntro() {
         const overlay = document.getElementById('introOverlay');
         if (!overlay) return;
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (reduceMotion) { overlay.remove(); return; }
+        if (reduceMotion) { overlay.remove(); enableScroll(); return; }
 
         // Падение фото
         requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('intro-drop')));
         
-        // Ускоряем процесс: через 1.2 секунды начинаем исчезновение
-        setTimeout(() => overlay.classList.add('intro-leaving'), 1200);
-        
-        // Полностью удаляем через 1.6 секунды (вместо 2.2)
+        // Ускоряем процесс: через 1.0 секунды начинаем исчезновение
         setTimeout(() => {
-            overlay.remove();
-            // Принудительно разрешаем скролл
-            document.body.style.overflow = '';
-            document.documentElement.style.overflow = '';
-        }, 1600);
+            overlay.classList.add('intro-leaving');
+        }, 1000);
+        
+        // Полностью удаляем через 1.4 секунды и разрешаем скролл
+        setTimeout(() => {
+            if (overlay.parentNode) overlay.remove();
+            enableScroll();
+        }, 1400);
         
         // Запасной таймер на случай, если что-то пошло не так
         setTimeout(() => {
-            if (document.getElementById('introOverlay')) {
-                document.getElementById('introOverlay').remove();
-                document.body.style.overflow = '';
-                document.documentElement.style.overflow = '';
+            const stillOverlay = document.getElementById('introOverlay');
+            if (stillOverlay) {
+                stillOverlay.remove();
+                enableScroll();
             }
         }, 2500);
+    }
+
+    // Отдельная функция для принудительного включения скролла
+    function enableScroll() {
+        document.body.style.overflow = '';
+        document.body.style.height = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.height = '';
+        // Для Safari
+        document.body.style.position = '';
+        document.body.style.width = '';
+        // Дополнительно: принудительно пересчитываем layout
+        void document.body.offsetHeight;
     }
 
     // ---------- INIT ----------
