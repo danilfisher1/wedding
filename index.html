@@ -284,9 +284,15 @@
         font-size: 8px;
     }
 }
+/* В конце блока добавьте */
+body, html {
+    overflow: auto !important;
+    height: auto !important;
+    position: static !important;
+}
     </style>
 </head>
-<body style="overflow:auto;height:auto;">
+<body style="overflow:auto !important;height:auto !important;position:static !important;">
 
 <div class="intro-overlay" id="introOverlay" aria-hidden="true">
     <div class="intro-photos">
@@ -781,6 +787,40 @@
         // Дополнительно: принудительно пересчитываем layout
         void document.body.offsetHeight;
     }
+    // ---------- ФИКС СКРОЛЛА ----------
+    function fixScroll() {
+        document.body.style.overflow = '';
+        document.body.style.height = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.height = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        void document.body.offsetHeight;
+    }
+
+    // Восстанавливаем скролл при возвращении на страницу
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            setTimeout(fixScroll, 100);
+        }
+    });
+
+    // При любом касании/клике — подстраховка
+    document.addEventListener('touchstart', function() {
+        setTimeout(fixScroll, 50);
+    }, { passive: true });
+    document.addEventListener('click', function() {
+        setTimeout(fixScroll, 50);
+    });
+
+    // Мониторим блокировку скролла
+    const origUpdate = updateTimeline;
+    updateTimeline = function() {
+        origUpdate();
+        if (document.body.style.overflow === 'hidden' || document.documentElement.style.overflow === 'hidden') {
+            fixScroll();
+        }
+    };
 
     // ---------- INIT ----------
     runIntro();
