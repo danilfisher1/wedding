@@ -244,9 +244,10 @@
         @media (prefers-reduced-motion: reduce) {
             .reveal, .hero-inner, .scroll-cue { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
         }
-		/* Блокировка скролла только на время анимации */
+		/* Блокировка касаний только пока оверлей виден */
 .intro-overlay {
     touch-action: none;
+    overscroll-behavior: none;
 }
 .intro-overlay.intro-leaving {
     pointer-events: none;
@@ -284,15 +285,9 @@
         font-size: 8px;
     }
 }
-/* В конце блока добавьте */
-body, html {
-    overflow: auto !important;
-    height: auto !important;
-    position: static !important;
-}
     </style>
 </head>
-<body style="overflow:auto !important;height:auto !important;position:static !important;">
+<body>
 
 <div class="intro-overlay" id="introOverlay" aria-hidden="true">
     <div class="intro-photos">
@@ -745,82 +740,59 @@ body, html {
     }
 
             // ---------- ЗАСТАВКА ПРИ ЗАГРУЗКЕ ----------
+    function lockScroll() {
+        // Блокируем только на время intro — без position:fixed, чтобы не ломать адресную строку
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+        document.body.style.touchAction = 'none';
+    }
+
+    function unlockScroll() {
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        document.body.style.touchAction = '';
+        document.body.style.height = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.documentElement.style.height = '';
+    }
+
+    function removeIntro(overlay) {
+        if (overlay && overlay.parentNode) overlay.remove();
+        unlockScroll();
+    }
+
     function runIntro() {
         const overlay = document.getElementById('introOverlay');
-        if (!overlay) return;
+        if (!overlay) {
+            unlockScroll();
+            return;
+        }
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (reduceMotion) { overlay.remove(); enableScroll(); return; }
+        if (reduceMotion) {
+            removeIntro(overlay);
+            return;
+        }
+
+        lockScroll();
 
         // Падение фото
         requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('intro-drop')));
-        
-        // Ускоряем процесс: через 1.0 секунды начинаем исчезновение
+
+        // Через 1.0 с начинаем исчезновение (pointer-events: none уже в CSS)
         setTimeout(() => {
             overlay.classList.add('intro-leaving');
         }, 1000);
-        
-        // Полностью удаляем через 1.4 секунды и разрешаем скролл
+
+        // Удаляем оверлей и снимаем блокировку после анимации
+        setTimeout(() => removeIntro(overlay), 1650);
+
+        // Запасной таймер
         setTimeout(() => {
-            if (overlay.parentNode) overlay.remove();
-            enableScroll();
-        }, 1400);
-        
-        // Запасной таймер на случай, если что-то пошло не так
-        setTimeout(() => {
-            const stillOverlay = document.getElementById('introOverlay');
-            if (stillOverlay) {
-                stillOverlay.remove();
-                enableScroll();
-            }
-        }, 2500);
+            const still = document.getElementById('introOverlay');
+            if (still) removeIntro(still);
+        }, 2800);
     }
-
-    // Отдельная функция для принудительного включения скролла
-    function enableScroll() {
-        document.body.style.overflow = '';
-        document.body.style.height = '';
-        document.documentElement.style.overflow = '';
-        document.documentElement.style.height = '';
-        // Для Safari
-        document.body.style.position = '';
-        document.body.style.width = '';
-        // Дополнительно: принудительно пересчитываем layout
-        void document.body.offsetHeight;
-    }
-    // ---------- ФИКС СКРОЛЛА ----------
-    function fixScroll() {
-        document.body.style.overflow = '';
-        document.body.style.height = '';
-        document.documentElement.style.overflow = '';
-        document.documentElement.style.height = '';
-        document.body.style.position = '';
-        document.body.style.width = '';
-        void document.body.offsetHeight;
-    }
-
-    // Восстанавливаем скролл при возвращении на страницу
-    document.addEventListener('visibilitychange', function() {
-        if (!document.hidden) {
-            setTimeout(fixScroll, 100);
-        }
-    });
-
-    // При любом касании/клике — подстраховка
-    document.addEventListener('touchstart', function() {
-        setTimeout(fixScroll, 50);
-    }, { passive: true });
-    document.addEventListener('click', function() {
-        setTimeout(fixScroll, 50);
-    });
-
-    // Мониторим блокировку скролла
-    const origUpdate = updateTimeline;
-    updateTimeline = function() {
-        origUpdate();
-        if (document.body.style.overflow === 'hidden' || document.documentElement.style.overflow === 'hidden') {
-            fixScroll();
-        }
-    };
 
     // ---------- INIT ----------
     runIntro();
